@@ -59,20 +59,20 @@ var budgetController = (function () {
             return newItem;
         },
 
-        deleteItem: function(type, id) {
+        deleteItem: function (type, id) {
             var ids, index;
             // id = 6
             // data.allItems[type][id];
             // ids = [1 2 4 6 8]
             // index = 3
 
-            ids = data.allItems[type].map(function(current) {
+            ids = data.allItems[type].map(function (current) {
                 return current.id;
             });
 
             index = ids.indexOf(id);
-             
-            if(index !== -1) {
+
+            if (index !== -1) {
                 // deleting the element using splice method
                 data.allItems[type].splice(index, 1);
             }
@@ -164,6 +164,17 @@ var UIController = (function () {
 
         },
 
+        deleteListItem: function (selectorID) {
+
+            // you can only remove a child of an element in the DOM
+            //little weird but this is how it works
+            //you're absically selecting the target element's parent
+            // and deleting the child of the parent
+            var el = document.getElementById(selectorID);
+            el.parentNode.removeChild(el);
+
+        },
+
         clearFields: function () {
             var fields, fieldsArr;
             fields = document.querySelectorAll(DOMstrings.inputDescription + ', ' + DOMstrings.inputValue);
@@ -251,7 +262,7 @@ var controller = (function (budgetCtrl, UICtrl) {
 
     };
 
-    var ctrlDeleteItem = function(event) {
+    var ctrlDeleteItem = function (event) {
         var itemID, splitID, type, ID;
 
         itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
@@ -267,9 +278,10 @@ var controller = (function (budgetCtrl, UICtrl) {
             budgetCtrl.deleteItem(type, ID);
 
             // 2. Delete the item from the UI
-
+            UICtrl.deleteListItem(itemID);
 
             // 3. Update and show the new  budget
+            updateBudget();
 
         }
     };
