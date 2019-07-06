@@ -1,5 +1,5 @@
 # Budgety
-### A simple budget tracking app made with Javascript
+### A simple budget tracking app made with JavaScript
 ![](Demo/demo.gif)
 
 ### Features:
